@@ -78,19 +78,19 @@ button {
   margin: 0.5rem;
 }
 .btn {
-    max-width: 4vw;
+    width: 4vw;
 }
 .title {
-    max-width: 10vw;
+    width: 10vw;
 }
 .author {
-    max-width: 7vw;
+    width: 7vw;
 }
 .date {
-    max-width: 5vw;
+    width: 9vw;
 }
 .body {
-    max-width: 50vw;
+    width: 40vw;
 }
 
 </style>
