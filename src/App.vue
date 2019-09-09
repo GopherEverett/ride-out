@@ -7,9 +7,15 @@
       src="./assets/kisspng-mountain-bike-bicycle-wheel-rim-free-bike-che-gulu-pull-material-5a8bd9dd400206.1966990815191147172622.png"
     />
     <HelloMessage msg="A Cycling Blog" />
-    <AddForm v-if="show" @add:post="addPost" @toggle:form="toggleForm"/>
+    <AddForm v-if="show" 
+    @add:post="addPost" 
+    @toggle:form="toggleForm"
+    />
     <button v-else @click='toggleForm'>Make a Post</button>
-    <Posts :posts="posts" @delete:post="deletePost"/>
+    <Posts :posts="posts" 
+    @delete:post="deletePost"
+    @edit:post="editPost"
+    />
   </div>
 </template>
 
@@ -45,8 +51,13 @@ export default {
       this.posts = [...this.posts, newPost];
     },
     deletePost(id) {
-      this.posts =this.posts.filter(
+      this.posts = this.posts.filter(
         post => post.id !== id
+      )
+    },
+    editPost(id, updatedPost) {
+      this.posts = this.posts.map(post => 
+        post.id === id ? updatedPost : post
       )
     },
     toggleForm() {

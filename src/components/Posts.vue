@@ -1,6 +1,6 @@
 <template>
   <div id="posts">
-      <p v-if="posts.length < 1" class="empty-table">No Posts!</p>
+    <p v-if="posts.length < 1" class="empty-table">No Posts!</p>
     <table v-else>
       <thead>
         <tr>
@@ -13,13 +13,29 @@
       </thead>
       <tbody>
         <tr v-for="post in posts" :key="post.id">
-          <td>{{ post.title }}</td>
-          <td>{{ post.author }}</td>
-          <td>{{ post.date }}</td>
-          <td>{{ post.body }}</td>
-          <td>
-              <button>EDIT</button>
-              <button @click="$emit('delete:post', post.id)">DELETE</button>
+          <td v-if="editing === post.id" class="title">
+            <input type="text" v-model="post.title" />
+          </td>
+          <td v-else class="title">{{ post.title }}</td>
+          <td v-if="editing === post.id" class="author">
+            <input type="text" v-model="post.author" />
+          </td>
+          <td v-else class="author">{{ post.author }}</td>
+          <td v-if="editing === post.id" class="date">
+            <input type="text" v-model="post.date" />
+          </td>
+          <td v-else class="date">{{ post.date }}</td>
+          <td v-if="editing === post.id" class="body">
+            <input type="text" v-model="post.body" />
+          </td>
+          <td v-else class="body">{{ post.body }}</td>
+          <td v-if="editing === post.id" class="btn">
+            <button @click="editPost(post)">Save</button>
+            <button class="muted-button" @click="editing = null">Cancel</button>
+          </td>
+          <td v-else class="btn">
+            <button @click="editMode(post.id)">EDIT</button>
+            <button @click="$emit('delete:post', post.id)">DELETE</button>
           </td>
         </tr>
       </tbody>
@@ -31,13 +47,50 @@
 export default {
   name: "posts",
   props: {
-      posts: Array,
+    posts: Array
+  },
+  data() {
+    return {
+      editing: null
+    };
+  },
+  methods: {
+    editMode(id) {
+      this.editing = id;
+    },
+    editPost(post) {
+      if (
+        post.title === "" ||
+        post.author === "" ||
+        post.date === "" ||
+        post.body === ""
+      )
+        return;
+      this.$emit("edit:post", post.id, post);
+      this.editing = null;
+    }
   }
 };
 </script>
 
 <style scoped>
-  button {
-    margin: 0.5rem;
-  }
+button {
+  margin: 0.5rem;
+}
+.btn {
+    max-width: 4vw;
+}
+.title {
+    max-width: 10vw;
+}
+.author {
+    max-width: 7vw;
+}
+.date {
+    max-width: 5vw;
+}
+.body {
+    max-width: 50vw;
+}
+
 </style>
