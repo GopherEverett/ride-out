@@ -6,22 +6,22 @@
       alt="Wheel logo"
       src="./assets/kisspng-mountain-bike-bicycle-wheel-rim-free-bike-che-gulu-pull-material-5a8bd9dd400206.1966990815191147172622.png"
     />
-    <HelloWorld msg="A Cycling Blog" />
+    <HelloMessage msg="A Cycling Blog" />
     <AddForm v-if="show" @add:post="addPost" @toggle:form="toggleForm"/>
     <button v-else @click='toggleForm'>Make a Post</button>
-    <Posts :posts="posts" />
+    <Posts :posts="posts" @delete:post="deletePost"/>
   </div>
 </template>
 
 <script>
-import HelloWorld from "./components/HelloWorld.vue";
+import HelloMessage from "./components/HelloMessage.vue";
 import Header from "./components/Header.vue";
 import AddForm from "./components/AddForm.vue";
 import Posts from "./components/Posts.vue";
 export default {
   name: "app",
   components: {
-    HelloWorld,
+    HelloMessage,
     Header,
     AddForm,
     Posts
@@ -43,6 +43,11 @@ export default {
       const id = lastId + 1;
       const newPost = { ...post, id };
       this.posts = [...this.posts, newPost];
+    },
+    deletePost(id) {
+      this.posts =this.posts.filter(
+        post => post.id !== id
+      )
     },
     toggleForm() {
       this.show = !this.show

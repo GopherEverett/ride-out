@@ -1,6 +1,7 @@
 <template>
   <div id="posts">
-    <table>
+      <p v-if="posts.length < 1" class="empty-table">No Posts!</p>
+    <table v-else>
       <thead>
         <tr>
           <th>Title</th>
@@ -18,7 +19,7 @@
           <td>{{ post.body }}</td>
           <td>
               <button>EDIT</button>
-              <button>DELETE</button>
+              <button @click="$emit('delete:post', post.id)">DELETE</button>
           </td>
         </tr>
       </tbody>

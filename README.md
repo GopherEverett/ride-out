@@ -1,4 +1,5 @@
-# my-app
+# Ride Out 
+My first Vue.js App!
 
 ## Project setup
 ```
